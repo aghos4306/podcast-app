@@ -6,9 +6,9 @@ data class EpisodeDTO(
     val id: Long,
     val title: String,
     val description: String,
-    val audioUrl: String,
+    val audioUrl: String?,
     val duration: Long,
-    val publicationDate: String
+    val publicationDate: String?
 )
 
 fun EpisodeDTO.toEpisode(): Episode {
@@ -16,8 +16,8 @@ fun EpisodeDTO.toEpisode(): Episode {
         id = id,
         title = title,
         description = description,
-        audioUrl = audioUrl,
+        audioUrl = audioUrl ?: "No Audio available for this podcast",
         duration = duration,
-        publicationDate = publicationDate
+        publicationDate = publicationDate ?: "Unknown publication date"
     )
 }

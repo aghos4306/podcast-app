@@ -1,4 +1,4 @@
-package com.aghogho.podcastandroidapp.presentation.podcast
+package com.aghogho.podcastandroidapp.presentation.episode
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,20 +9,26 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.aghogho.podcastandroidapp.presentation.podcast.components.PodcastItem
+import com.aghogho.podcastandroidapp.presentation.episode.component.EpisodeItem
 
 @Composable
-fun PodCastScreen(
+fun EpisodeScreen(
     navController: NavController,
-    podcastViewModel: PodcastViewModel = hiltViewModel()
+    podcastId: String,
+    episodeScreenViewModel: EpisodeScreenViewModel = hiltViewModel()
 ) {
-    val podcastState by podcastViewModel.podcastState
+    val episodeState by episodeScreenViewModel.episodeState
+
+    LaunchedEffect(podcastId) {
+        episodeScreenViewModel.loadPodcastEpisodes(podcastId.toLong())
+    }
 
     Scaffold { paddingValues ->
         Box(
@@ -31,22 +37,20 @@ fun PodCastScreen(
                 .padding(paddingValues)
         ) {
             when {
-                podcastState.isLoading -> {
+                episodeState.isLoading -> {
                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                 }
-                podcastState.error != null -> {
+                episodeState.error != null -> {
                     Text(
-                        text = podcastState.error!!,
+                        text = episodeState.error!!,
                         color = Color.Red,
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
                 else -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
-                        items(podcastState.podcastData) { podcast ->
-                            PodcastItem(podcast = podcast, onClick = {
-                                navController.navigate("episode_screen/${podcast.id}")
-                            })
+                        items(episodeState.episodeData) { episode ->
+                            EpisodeItem(episode = episode, onClick = {})
                         }
                     }
                 }
@@ -54,4 +58,3 @@ fun PodCastScreen(
         }
     }
 }
-

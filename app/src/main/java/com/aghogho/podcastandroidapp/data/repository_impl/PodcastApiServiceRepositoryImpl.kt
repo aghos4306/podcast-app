@@ -23,7 +23,7 @@ class PodcastApiServiceRepositoryImpl @Inject constructor(
         offset: Int
     ): PaginationSegmentDTOEpisodeDTO {
         return try {
-            getPodcastEpisodes(podcastId, limit, offset)
+            podCastApi.getPodcastEpisodes(podcastId, limit, offset)
         } catch (e: Exception) {
             throw e
         }
