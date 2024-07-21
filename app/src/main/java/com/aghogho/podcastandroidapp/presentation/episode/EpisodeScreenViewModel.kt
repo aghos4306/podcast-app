@@ -10,6 +10,7 @@ import com.aghogho.podcastandroidapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,6 +20,8 @@ class EpisodeScreenViewModel @Inject constructor(
 
     private val _episodeState = mutableStateOf(EpisodeListState())
     val episodeState: State<EpisodeListState> = _episodeState
+
+    val isPlaying = PodcastEpisodePlayer.isPlaying.stateIn(viewModelScope, kotlinx.coroutines.flow.SharingStarted.Eagerly, false)
 
     fun loadPodcastEpisodes(podcastId: Long) {
         getPodcastEpisodeUseCase(podcastId, 10, 0).onEach {
@@ -38,5 +41,14 @@ class EpisodeScreenViewModel @Inject constructor(
 
     fun playEpisode(audioUrl: String) {
         PodcastEpisodePlayer.playEpisode(audioUrl)
+    }
+
+    fun pauseEpisode() {
+        PodcastEpisodePlayer.pauseEpisode()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        PodcastEpisodePlayer.release()
     }
 }

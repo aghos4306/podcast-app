@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -19,7 +20,8 @@ import com.aghogho.podcastandroidapp.domain.model.Episode
 @Composable
 fun EpisodeItem(
     episode: Episode,
-    onClick: (String) -> Unit
+    isPlaying: Boolean,
+    onPlayPauseClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -31,8 +33,9 @@ fun EpisodeItem(
             style = MaterialTheme.typography.headlineMedium
         )
         Spacer(modifier = Modifier.height(8.dp))
-        IconButton(onClick = { episode.audioUrl?.let { onClick(it) } }) {
-            Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "Play Episode")
+        IconButton(onClick = onPlayPauseClick) {
+            val icon = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow
+            Icon(imageVector = icon, contentDescription = if (isPlaying) "Pause" else "Play")
         }
         Spacer(modifier = Modifier.height(8.dp))
         Text(

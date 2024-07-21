@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,6 +26,7 @@ fun EpisodeScreen(
     episodeScreenViewModel: EpisodeScreenViewModel = hiltViewModel()
 ) {
     val episodeState by episodeScreenViewModel.episodeState
+    val isPlaying by episodeScreenViewModel.isPlaying.collectAsState()
 
     LaunchedEffect(podcastId) {
         episodeScreenViewModel.loadPodcastEpisodes(podcastId.toLong())
@@ -50,9 +52,15 @@ fun EpisodeScreen(
                 else -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(episodeState.episodeData) { episode ->
-                            EpisodeItem(episode = episode, onClick = { audioUrl ->
-                                episodeScreenViewModel.playEpisode(audioUrl)
-                            })
+                            EpisodeItem(
+                                episode = episode,
+                                isPlaying = isPlaying,
+                                onPlayPauseClick = {
+                                    if (isPlaying) {
+                                        episodeScreenViewModel.pauseEpisode()
+                                    } else { episode.audioUrl?.let { episodeScreenViewModel.playEpisode(it) } }
+                                }
+                            )
                         }
                     }
                 }
