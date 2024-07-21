@@ -50,7 +50,9 @@ fun EpisodeScreen(
                 else -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(episodeState.episodeData) { episode ->
-                            EpisodeItem(episode = episode, onClick = {})
+                            EpisodeItem(episode = episode, onClick = { audioUrl ->
+                                episodeScreenViewModel.playEpisode(audioUrl)
+                            })
                         }
                     }
                 }

@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.aghogho.podcastandroidapp.domain.usecases.GetPodcastEpisodeUseCase
+import com.aghogho.podcastandroidapp.util.PodcastEpisodePlayer
 import com.aghogho.podcastandroidapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -33,5 +34,9 @@ class EpisodeScreenViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun playEpisode(audioUrl: String) {
+        PodcastEpisodePlayer.playEpisode(audioUrl)
     }
 }

@@ -1,11 +1,14 @@
 package com.aghogho.podcastandroidapp.presentation.episode.component
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,18 +19,21 @@ import com.aghogho.podcastandroidapp.domain.model.Episode
 @Composable
 fun EpisodeItem(
     episode: Episode,
-    onClick: (Episode) -> Unit
+    onClick: (String) -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .clickable { onClick(episode) }
     ) {
         Text(
             text = episode.title,
             style = MaterialTheme.typography.headlineMedium
         )
+        Spacer(modifier = Modifier.height(8.dp))
+        IconButton(onClick = { episode.audioUrl?.let { onClick(it) } }) {
+            Icon(imageVector = Icons.Default.PlayArrow, contentDescription = "Play Episode")
+        }
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = episode.description,

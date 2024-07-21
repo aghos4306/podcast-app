@@ -1,11 +1,13 @@
 package com.aghogho.podcastandroidapp.data.remote.podcast_dto
 
 import com.aghogho.podcastandroidapp.domain.model.Episode
+import com.google.gson.annotations.SerializedName
 
 data class EpisodeDTO(
     val id: Long,
     val title: String,
     val description: String,
+    @SerializedName("url")
     val audioUrl: String?,
     val duration: Long,
     val publicationDate: String?
