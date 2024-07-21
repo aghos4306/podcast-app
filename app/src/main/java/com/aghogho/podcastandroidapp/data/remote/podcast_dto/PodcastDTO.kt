@@ -23,7 +23,7 @@ fun PodcastDTO.toPodCast(): Podcast {
         image = image,
         link = link,
         rss = rss,
-        categoryIDs = categoryIDs,
+        categoryIDs = categoryIDs ?: emptyList(),
         title = title,
         description = description,
         seasonal = seasonal

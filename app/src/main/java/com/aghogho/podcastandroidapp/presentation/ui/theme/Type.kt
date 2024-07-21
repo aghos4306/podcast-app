@@ -1,4 +1,4 @@
-package com.aghogho.podcastandroidapp.ui.theme
+package com.aghogho.podcastandroidapp.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

@@ -10,7 +10,11 @@ class PodcastApiServiceRepositoryImpl @Inject constructor(
     private val podCastApi: PodcastApiService
 ): PodcastApiServiceRepository {
     override suspend fun getTopPodcasts(limit: Int, offset: Int): PaginationSegmentDTOPodcastDTO {
-        return podCastApi.getTopPodcasts(limit, offset)
+        return try {
+            podCastApi.getTopPodcasts(limit, offset)
+        } catch (e: Exception) {
+            throw e
+        }
     }
 
     override suspend fun getPodcastEpisodes(
@@ -18,11 +22,11 @@ class PodcastApiServiceRepositoryImpl @Inject constructor(
         limit: Int,
         offset: Int
     ): PaginationSegmentDTOEpisodeDTO {
-        return podCastApi.getPodcastEpisodes(
-            podcastId,
-            limit,
-            offset
-        )
+        return try {
+            getPodcastEpisodes(podcastId, limit, offset)
+        } catch (e: Exception) {
+            throw e
+        }
     }
 
 }

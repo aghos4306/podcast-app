@@ -25,6 +25,7 @@ android {
         val properties = Properties()
         properties.load(project.rootProject.file("local.properties").inputStream())
         buildConfigField("String", "PODCAST_BASE_URL", properties.getProperty("PODCAST_BASE_URL"))
+        buildConfigField("String", "IMAGE_BASE_URL", properties.getProperty("IMAGE_BASE_URL"))
     }
 
     buildTypes {
