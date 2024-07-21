@@ -8,6 +8,8 @@ import com.aghogho.podcastandroidapp.domain.usecases.GetPodcastEpisodeUseCase
 import com.aghogho.podcastandroidapp.util.PodcastEpisodePlayer
 import com.aghogho.podcastandroidapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -22,6 +24,9 @@ class EpisodeScreenViewModel @Inject constructor(
     val episodeState: State<EpisodeListState> = _episodeState
 
     val isPlaying = PodcastEpisodePlayer.isPlaying.stateIn(viewModelScope, kotlinx.coroutines.flow.SharingStarted.Eagerly, false)
+
+    private val _currentlyPlayingEpisodeId = MutableStateFlow<Long?>(null)
+    val currentPlayingEpisodeId: StateFlow<Long?> = _currentlyPlayingEpisodeId
 
     fun loadPodcastEpisodes(podcastId: Long) {
         getPodcastEpisodeUseCase(podcastId, 10, 0).onEach {
@@ -39,12 +44,14 @@ class EpisodeScreenViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun playEpisode(audioUrl: String) {
+    fun playEpisode(episodeId: Long, audioUrl: String) {
         PodcastEpisodePlayer.playEpisode(audioUrl)
+        _currentlyPlayingEpisodeId.value = episodeId
     }
 
     fun pauseEpisode() {
         PodcastEpisodePlayer.pauseEpisode()
+        _currentlyPlayingEpisodeId.value = null
     }
 
     override fun onCleared() {

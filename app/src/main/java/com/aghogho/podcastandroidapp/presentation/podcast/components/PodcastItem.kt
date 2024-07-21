@@ -13,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.aghogho.podcastandroidapp.domain.model.Podcast
 import com.aghogho.podcastandroidapp.util.Constants.IMAGE_BASE_URL
 import com.aghogho.podcastandroidapp.util.ImageUrlUtil
@@ -36,7 +37,7 @@ fun PodcastItem(podcast: Podcast, onClick: (Podcast) -> Unit) {
         }
         Spacer(modifier = Modifier.width(16.dp))
         Column {
-            Text(text = podcast.title, style = MaterialTheme.typography.headlineMedium)
+            Text(text = podcast.title, style = MaterialTheme.typography.headlineMedium.copy(fontSize = 20.sp))
             Text(text = podcast.author, style = MaterialTheme.typography.titleSmall)
         }
     }

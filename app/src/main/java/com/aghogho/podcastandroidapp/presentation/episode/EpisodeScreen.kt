@@ -27,6 +27,7 @@ fun EpisodeScreen(
 ) {
     val episodeState by episodeScreenViewModel.episodeState
     val isPlaying by episodeScreenViewModel.isPlaying.collectAsState()
+    val currentlyPlayingEpisodeId by episodeScreenViewModel.currentPlayingEpisodeId.collectAsState()
 
     LaunchedEffect(podcastId) {
         episodeScreenViewModel.loadPodcastEpisodes(podcastId.toLong())
@@ -48,17 +49,19 @@ fun EpisodeScreen(
                         color = Color.Red,
                         modifier = Modifier.align(Alignment.Center)
                     )
-                }
-                else -> {
+                } else -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
                         items(episodeState.episodeData) { episode ->
                             EpisodeItem(
                                 episode = episode,
-                                isPlaying = isPlaying,
+                                isPlaying = isPlaying && currentlyPlayingEpisodeId == episode.id,
+                                isCurrentEpisode = currentlyPlayingEpisodeId == episode.id,
                                 onPlayPauseClick = {
-                                    if (isPlaying) {
+                                    if (currentlyPlayingEpisodeId == episode.id && isPlaying) {
                                         episodeScreenViewModel.pauseEpisode()
-                                    } else { episode.audioUrl?.let { episodeScreenViewModel.playEpisode(it) } }
+                                    } else {
+                                        episodeScreenViewModel.playEpisode(episode.id, episode.audioUrl!!)
+                                    }
                                 }
                             )
                         }
