@@ -1,5 +1,6 @@
 package com.aghogho.podcastandroidapp.presentation.podcast
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,8 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.aghogho.podcastandroidapp.presentation.podcast.components.PodcastHeader
 import com.aghogho.podcastandroidapp.presentation.podcast.components.PodcastItem
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PodCastScreen(
     navController: NavController,
@@ -43,6 +46,12 @@ fun PodCastScreen(
                 }
                 else -> {
                     LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        stickyHeader {
+                            PodcastHeader(
+                                title = "Podcast Live"
+                            )
+                        }
+
                         items(podcastState.podcastData) { podcast ->
                             PodcastItem(podcast = podcast, onClick = {
                                 navController.navigate("episode_screen/${podcast.id}")

@@ -40,6 +40,10 @@ fun EpisodeItem(
             text = episode.title,
             style = MaterialTheme.typography.headlineMedium.copy(fontSize = 20.sp)
         )
+        Text(
+            text = episode.publicationDate,
+            style = MaterialTheme.typography.headlineMedium.copy(fontSize = 10.sp)
+        )
         Spacer(modifier = Modifier.height(8.dp))
         Box(
             modifier = Modifier

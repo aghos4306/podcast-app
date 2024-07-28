@@ -9,5 +9,6 @@ data class Episode(
     @SerializedName("url")
     val audioUrl: String?,
     val duration: Long,
+    @SerializedName("published")
     val publicationDate: String
 )
