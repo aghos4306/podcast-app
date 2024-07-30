@@ -18,7 +18,7 @@ fun PodcastNavGraph() {
         composable(route = Screens.PodCastScreen.route) {
             PodCastScreen(navController = navController)
         }
-        composable("episode_screen/{podcastId}") { backStackEntry ->
+        composable("${Screens.EpisodeScreen.route}/{podcastId}") { backStackEntry ->
             val podcastId = backStackEntry.arguments?.getString("podcastId")
             podcastId?.let {
                 EpisodeScreen(navController = navController, podcastId = it)

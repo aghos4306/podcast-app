@@ -3,6 +3,7 @@ package com.aghogho.podcastandroidapp.data.repository_impl
 import com.aghogho.podcastandroidapp.data.remote.PodcastApiService
 import com.aghogho.podcastandroidapp.domain.repository.PodcastApiServiceRepository
 import com.aghogho.podcastandroidapp.mock_model.MockPodcastDto
+import com.aghogho.podcastandroidapp.mock_model.MockPodcastEpisodeDto
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
@@ -45,6 +46,17 @@ class PodcastApiServiceRepositoryImplTest {
         val result = podcastApiServiceRepositoryImpl.getTopPodcasts(10, 0)
 
         assertEquals(podcastDto, result)
+    }
+
+    @Test
+    fun `getTopPodcastEpisode should return data when API call is successful`() = runTest {
+        val podcastEpisodeDto = MockPodcastEpisodeDto.mockPodcastEpisodeDto
+
+        Mockito.`when`(podcastApiService.getPodcastEpisodes(1234, 0, 0)).thenReturn(podcastEpisodeDto)
+
+        val result = podcastApiServiceRepositoryImpl.getPodcastEpisodes(1234, 0, 0)
+
+        assertEquals(podcastEpisodeDto, result)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

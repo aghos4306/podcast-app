@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert.*
-
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -82,5 +81,4 @@ class GetPodcastEpisodeUseCaseTest {
         assertTrue(result[0] is Resource.Loading)
         assertEquals("Error fetching data, check your network...", errorResult.message)
     }
-
 }

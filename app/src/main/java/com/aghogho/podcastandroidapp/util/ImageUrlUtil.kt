@@ -1,11 +1,11 @@
 package com.aghogho.podcastandroidapp.util
 
-import com.aghogho.podcastandroidapp.BuildConfig
+import com.aghogho.podcastandroidapp.util.Constants.IMAGE_BASE_URL
 
 object ImageUrlUtil {
     fun constructImageUrl(imageId: String?): String? {
         return imageId?.let {
-            "${BuildConfig.IMAGE_BASE_URL}$it"
+            "$IMAGE_BASE_URL$it"
         }
     }
 }
